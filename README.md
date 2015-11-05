@@ -25,11 +25,11 @@ It has a volume in `/data/db`.
  1. Clone the repository.
  2. Put your own instance definition in `instances`
  3. Search and replace the composers database instance name by your
-    own: 
+    own:
 ```shell
 sed -i 's/composers/mydbname/g' Dockerfile
 ```
- 4. Build it now: `docker build tarantool .`
+ 4. Build it now: `docker build -t tarantool .`
  5. Run the image, e.g.:
 ```shell
 docker run -d -ti --name my_tarantool_db -p 127.0.0.1:3301:3301 tarantool
