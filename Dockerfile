@@ -5,7 +5,8 @@ MAINTAINER Antonio P.P. Almeida "perusio@gmail.com"
 ## Seed debconf selections and install locales: tarantool needs UTF8.
 COPY locales_seed.txt /tmp/locales_seed.txt
 RUN debconf-set-selections /tmp/locales_seed.txt && \
-    apt-get update && DEBIAN_FRONTEND=noninteractive apt-get -y --no-install-recommends install locales curl
+    apt-get update && DEBIAN_FRONTEND=noninteractive apt-get -y --no-install-recommends install locales curl \
+    gnupg ca-certificates apt-transport-https
 
 ## Set language environment variables
 ENV LANG en_US.UTF-8
@@ -15,7 +16,7 @@ ENV LANGUAGE en_US.UTF-8
 ENV DEBIAN_TESTING stretch
 
 ## Get the repository key, add the to the sources list and install tarantool and gosu.
-RUN curl -s http://tarantool.org/dist/public.key | apt-key add - && \
+RUN curl -s https://tarantool.org/dist/public.key | apt-key add - && \
     echo "deb http://tarantool.org/dist/master/debian/ $DEBIAN_TESTING main" > /etc/apt/sources.list.d/tarantool.list && \
     echo "deb-src http://tarantool.org/dist/master/debian/ $DEBIAN_TESTING main" >> /etc/apt/sources.list.d/tarantool.list && \
     apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends tarantool-common tarantool gosu
